@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col mt-3">
+                <div id="player"></div>
+
+                <script>
+                    function convertYouTubeLinkToId(link) {
+                        // Extract the video ID from different types of YouTube links
+                        const patterns = [
+                            /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/,
+                            /^https?:\/\/(www\.)?youtu\.be\/(.{11})$/
+                        ];
+
+                        for (let i = 0; i < patterns.length; i++) {
+                            const match = link.match(patterns[i]);
+                            if (match && match[1]) {
+                                return match[1];
+                            }
+                        }
+
+                        // If no video ID is found, return null or handle accordingly
+                        return null;
+                    }
+
+                    // Replace VIDEO_ID with the actual YouTube video ID
+                    const ytLink = "https://www.youtube.com/watch?v=7MKEOfSP2s4"
+                    const videoId = convertYouTubeLinkToId(ytLink)
+
+                    const iframe = document.createElement('iframe');
+                    iframe.src = `https://www.youtube.com/embed/${videoId}`;
+                    iframe.width = '100%';
+                    iframe.height = '350px';
+                    iframe.allowfullscreen = true;
+
+                    document.getElementById('player').appendChild(iframe);
+
+                    // hide the video title
+                    $(".ytp-title-link").hide();
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
